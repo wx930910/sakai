@@ -77,12 +77,12 @@ import org.sakaiproject.gradebookng.tool.panels.SortGradeItemsPanel;
 import org.sakaiproject.gradebookng.tool.panels.ToggleGradeItemsToolbarPanel;
 import org.sakaiproject.portal.util.PortalUtils;
 import org.sakaiproject.rubrics.logic.RubricsConstants;
-import org.sakaiproject.service.gradebook.shared.Assignment;
-import org.sakaiproject.service.gradebook.shared.GraderPermission;
-import org.sakaiproject.service.gradebook.shared.GradingType;
-import org.sakaiproject.service.gradebook.shared.PermissionDefinition;
-import org.sakaiproject.service.gradebook.shared.SortType;
-import org.sakaiproject.tool.gradebook.Gradebook;
+import org.sakaiproject.core.api.grades.Assignment;
+import org.sakaiproject.core.api.grades.GraderPermission;
+import org.sakaiproject.core.api.grades.GradingType;
+import org.sakaiproject.core.api.grades.PermissionDefinition;
+import org.sakaiproject.core.api.grades.SortType;
+import org.sakaiproject.core.persistence.grades.model.Gradebook;
 
 /**
  * Grades page. Instructors and TAs see this one. Students see the {@link StudentPage}.
