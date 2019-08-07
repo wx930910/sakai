@@ -15,7 +15,6 @@
  */
 package org.sakaiproject.gradebookng.tool.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.core.api.grades.CategoryDefinition;
 import org.sakaiproject.core.api.grades.GradebookInformation;
 import org.sakaiproject.core.api.grades.SortType;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

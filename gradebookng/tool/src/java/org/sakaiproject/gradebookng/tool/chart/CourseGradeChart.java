@@ -7,7 +7,7 @@ import java.util.Set;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.sakaiproject.gradebookng.business.util.MessageHelper;
 import org.sakaiproject.gradebookng.tool.model.GbChartData;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
 import org.sakaiproject.core.api.grades.GradeMappingDefinition;
 import org.sakaiproject.core.api.grades.GradebookInformation;
 

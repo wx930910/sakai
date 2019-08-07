@@ -44,7 +44,7 @@ import org.sakaiproject.core.api.grades.ConflictingExternalIdException;
 import org.sakaiproject.core.api.grades.GradebookHelper;
 import org.sakaiproject.core.api.grades.GradingService;
 import org.sakaiproject.core.api.grades.InvalidGradeItemNameException;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 import org.sakaiproject.core.utils.grades.GradingConstants;
 import org.sakaiproject.util.DateFormatterUtil;
 

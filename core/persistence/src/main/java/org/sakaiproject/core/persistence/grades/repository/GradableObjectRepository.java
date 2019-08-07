@@ -1,10 +1,9 @@
 package org.sakaiproject.core.persistence.grades.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
-import org.sakaiproject.core.persistence.grades.model.GradableObject;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.GradableObject;
 
 public interface GradableObjectRepository extends CrudRepository<GradableObject, Long> {
 

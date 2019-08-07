@@ -1,12 +1,11 @@
 package org.sakaiproject.core.persistence.grades.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import org.sakaiproject.core.persistence.grades.model.Comment;
-import org.sakaiproject.core.persistence.grades.model.GradableObject;
+import org.sakaiproject.core.persistence.grades.entity.Comment;
+import org.sakaiproject.core.persistence.grades.entity.GradableObject;
 
 public interface CommentRepository extends CrudRepository<Comment, Long> {
 

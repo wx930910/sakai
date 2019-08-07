@@ -22,7 +22,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.sakaiproject.gradebookng.business.model.GbStudentGradeInfo;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
 import org.sakaiproject.core.api.grades.GradebookInformation;
 
 /**

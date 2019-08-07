@@ -36,10 +36,10 @@ import org.sakaiproject.gradebookng.business.util.CourseGradeFormatter;
 import org.sakaiproject.gradebookng.tool.pages.GradebookPage;
 import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.core.api.grades.CategoryDefinition;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
 import org.sakaiproject.core.api.grades.GradingType;
 import org.sakaiproject.core.api.grades.SortType;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 public class InstructorGradeSummaryGradesPanel extends BasePanel {
 

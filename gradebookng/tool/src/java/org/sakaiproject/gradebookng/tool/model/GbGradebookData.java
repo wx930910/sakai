@@ -42,7 +42,7 @@ import org.sakaiproject.gradebookng.business.util.FormatHelper;
 import org.sakaiproject.gradebookng.tool.pages.GradebookPage;
 import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.core.api.grades.CategoryDefinition;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
 import org.sakaiproject.core.api.grades.GradebookInformation;
 import org.sakaiproject.core.api.grades.GradingType;
 

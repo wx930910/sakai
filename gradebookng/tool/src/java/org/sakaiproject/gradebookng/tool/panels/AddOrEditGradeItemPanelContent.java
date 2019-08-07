@@ -44,7 +44,7 @@ import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.core.api.grades.CategoryDefinition;
 import org.sakaiproject.core.api.grades.GradingService;
 import org.sakaiproject.core.api.grades.GradingType;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 import org.sakaiproject.core.utils.grades.GradingConstants;
 import org.sakaiproject.util.DateFormatterUtil;
 

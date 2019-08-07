@@ -18,18 +18,13 @@ package org.sakaiproject.core.services.grades;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.Properties;
-import javax.annotation.Resource;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.mockito.Mockito;
-
-import org.sakaiproject.core.api.grades.GradingPersistenceManager;
-import org.sakaiproject.core.api.grades.GradingService;
-import org.sakaiproject.core.api.grades.SakaiProxy;
-
+import org.hibernate.dialect.HSQLDialect;
+import org.hsqldb.jdbcDriver;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.component.api.ServerConfigurationService;
@@ -42,8 +37,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -55,17 +52,33 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackages = "org.sakaiproject.core.services.grades")
 @EnableTransactionManagement
-@EnableJpaRepositories("org.sakaiproject.core.persistence.grades")
+@EnableJpaRepositories("org.sakaiproject.core.persistence.grades.repository")
+@PropertySource("classpath:/hibernate.properties")
 public class GradingServiceTestConfiguration {
 
     @Autowired
     private Environment environment;
 
-    @Bean
+    @Bean(name = "javax.sql.DataSource")
     public DataSource dataSource() {
+        DriverManagerDataSource db = new DriverManagerDataSource();
+        db.setDriverClassName(environment.getProperty(org.hibernate.cfg.Environment.DRIVER, jdbcDriver.class.getName()));
+        db.setUrl(environment.getProperty(org.hibernate.cfg.Environment.URL, "jdbc:hsqldb:mem:test"));
+        db.setUsername(environment.getProperty(org.hibernate.cfg.Environment.USER, "sa"));
+        db.setPassword(environment.getProperty(org.hibernate.cfg.Environment.PASS, ""));
+        return db;
+    }
 
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+    @Bean
+    public Properties hibernateProperties() {
+        return new Properties() {
+            {
+                setProperty(org.hibernate.cfg.Environment.DIALECT, environment.getProperty(org.hibernate.cfg.Environment.DIALECT, HSQLDialect.class.getName()));
+                setProperty(org.hibernate.cfg.Environment.HBM2DDL_AUTO, environment.getProperty(org.hibernate.cfg.Environment.HBM2DDL_AUTO));
+                setProperty(org.hibernate.cfg.Environment.ENABLE_LAZY_LOAD_NO_TRANS, environment.getProperty(org.hibernate.cfg.Environment.ENABLE_LAZY_LOAD_NO_TRANS, "true"));
+                setProperty(org.hibernate.cfg.Environment.CACHE_REGION_FACTORY, environment.getProperty(org.hibernate.cfg.Environment.CACHE_REGION_FACTORY));
+            }
+        };
     }
 
     @Bean

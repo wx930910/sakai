@@ -38,7 +38,6 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.HiddenField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
@@ -82,7 +81,7 @@ import org.sakaiproject.core.api.grades.GraderPermission;
 import org.sakaiproject.core.api.grades.GradingType;
 import org.sakaiproject.core.api.grades.PermissionDefinition;
 import org.sakaiproject.core.api.grades.SortType;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 /**
  * Grades page. Instructors and TAs see this one. Students see the {@link StudentPage}.

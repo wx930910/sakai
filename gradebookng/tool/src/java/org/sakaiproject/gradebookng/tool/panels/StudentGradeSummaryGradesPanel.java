@@ -40,11 +40,11 @@ import org.sakaiproject.gradebookng.tool.pages.GradebookPage;
 import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.core.api.grades.CategoryDefinition;
 import org.sakaiproject.core.api.grades.CategoryScoreData;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
 import org.sakaiproject.core.api.grades.GradebookInformation;
 import org.sakaiproject.core.api.grades.GradingType;
 import org.sakaiproject.core.api.grades.SortType;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 /**
  * The panel that is rendered for students for both their own grades view, and also when viewing it from the instructor review tab

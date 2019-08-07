@@ -2,14 +2,11 @@ package org.sakaiproject.core.services.grades;
 
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.component.api.ServerConfigurationService;
-import org.sakaiproject.core.api.grades.SakaiProxy;
-import org.sakaiproject.core.api.grades.GradingPermissionService;
 import org.sakaiproject.core.utils.grades.GradingConstants;
 import org.sakaiproject.event.api.EventTrackingService;
 import org.sakaiproject.section.api.SectionAwareness;
 import org.sakaiproject.section.api.coursemanagement.CourseSection;
 import org.sakaiproject.section.api.coursemanagement.EnrollmentRecord;
-import org.sakaiproject.section.api.coursemanagement.ParticipationRecord;
 import org.sakaiproject.section.api.facade.Role;
 import org.sakaiproject.site.api.Group;
 import org.sakaiproject.site.api.Site;
@@ -24,7 +21,6 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;

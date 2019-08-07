@@ -3,9 +3,8 @@ package org.sakaiproject.core.persistence.grades.repository;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-import org.sakaiproject.core.persistence.grades.model.GradebookAssignment;
+import org.sakaiproject.core.persistence.grades.entity.GradebookAssignment;
 
 public interface GradebookAssignmentRepository extends CrudRepository<GradebookAssignment, Long> {
 

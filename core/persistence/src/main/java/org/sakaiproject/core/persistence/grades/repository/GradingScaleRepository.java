@@ -1,12 +1,11 @@
 package org.sakaiproject.core.persistence.grades.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
 
-import org.sakaiproject.core.persistence.grades.model.GradingScale;
+import org.sakaiproject.core.persistence.grades.entity.GradingScale;
 
 public interface GradingScaleRepository extends CrudRepository<GradingScale, Long> {
 

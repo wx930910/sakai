@@ -15,8 +15,8 @@ import org.sakaiproject.gradebookng.business.util.FormatHelper;
 import org.sakaiproject.gradebookng.tool.model.GradebookUiSettings;
 import org.sakaiproject.gradebookng.tool.pages.GradebookPage;
 import org.sakaiproject.core.api.grades.CategoryScoreData;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 import java.io.Serializable;
 import java.util.Collections;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>master</artifactId>
         <groupId>org.sakaiproject</groupId>
@@ -8,21 +9,32 @@
         <relativePath>../master/pom.xml</relativePath>
     </parent>
 
-    <modelVersion>4.0.0</modelVersion>
+    <name>Core</name>
     <groupId>org.sakaiproject</groupId>
-    <artifactId>sakai-core</artifactId>
+    <artifactId>core</artifactId>
     <packaging>pom</packaging>
-    <name>Sakai Core</name>
-    <description>The core module is meant to serve as a location for services that are central to sakai's functionality</description>
-    <inceptionYear>2019</inceptionYear>
 
     <modules>
-        <module>api</module>
         <module>persistence</module>
         <module>services</module>
-        <module>utils</module>
         <module>tool</module>
+        <module>utils</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.sakaiproject.core</groupId>
+                <artifactId>core-utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.sakaiproject.core</groupId>
+                <artifactId>core-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>

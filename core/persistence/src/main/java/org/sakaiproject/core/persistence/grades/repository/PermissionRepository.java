@@ -1,11 +1,10 @@
 package org.sakaiproject.core.persistence.grades.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import org.sakaiproject.core.persistence.grades.model.Permission;
+import org.sakaiproject.core.persistence.grades.entity.Permission;
 
 public interface PermissionRepository extends CrudRepository<Permission, Long> {
 

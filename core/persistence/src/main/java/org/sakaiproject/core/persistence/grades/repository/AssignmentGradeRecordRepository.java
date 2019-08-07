@@ -1,7 +1,7 @@
 package org.sakaiproject.core.persistence.grades.repository;
 
-import org.sakaiproject.core.persistence.grades.model.AssignmentGradeRecord;
-import org.sakaiproject.core.persistence.grades.model.GradableObject;
+import org.sakaiproject.core.persistence.grades.entity.AssignmentGradeRecord;
+import org.sakaiproject.core.persistence.grades.entity.GradableObject;
 
 import java.util.Collection;
 import java.util.List;

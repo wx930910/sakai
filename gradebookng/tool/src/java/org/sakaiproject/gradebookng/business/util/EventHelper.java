@@ -6,7 +6,7 @@ import org.sakaiproject.gradebookng.business.GbEvent;
 import org.sakaiproject.gradebookng.business.GbRole;
 
 import org.sakaiproject.gradebookng.business.GradeSaveResponse;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 import org.sakaiproject.core.api.grades.Assignment;
 import org.sakaiproject.event.cover.EventTrackingService;
 import org.sakaiproject.event.api.Event;

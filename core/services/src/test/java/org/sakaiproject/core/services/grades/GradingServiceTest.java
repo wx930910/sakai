@@ -4,18 +4,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import org.sakaiproject.core.api.grades.AssessmentNotFoundException;
-import org.sakaiproject.core.api.grades.Assignment;
-import org.sakaiproject.core.api.grades.CategoryDefinition;
-import org.sakaiproject.core.api.grades.CategoryScoreData;
-import org.sakaiproject.core.api.grades.GradebookNotFoundException;
-import org.sakaiproject.core.api.grades.GradeDefinition;
-import org.sakaiproject.core.api.grades.GradebookInformation;
-import org.sakaiproject.core.api.grades.GradingService;
-import org.sakaiproject.core.api.grades.SakaiProxy;
-import org.sakaiproject.core.persistence.grades.model.CourseGrade;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
-import org.sakaiproject.core.persistence.grades.model.GradebookAssignment;
+import org.sakaiproject.core.persistence.grades.entity.CourseGrade;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.GradebookAssignment;
 import org.sakaiproject.core.utils.grades.GradingConstants;
 
 import static org.mockito.Mockito.doReturn;
@@ -25,7 +16,6 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -33,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;

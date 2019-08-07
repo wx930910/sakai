@@ -2,8 +2,8 @@ package org.sakaiproject.core.persistence.grades.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import org.sakaiproject.core.persistence.grades.model.GradableObject;
-import org.sakaiproject.core.persistence.grades.model.GradingEvent;
+import org.sakaiproject.core.persistence.grades.entity.GradableObject;
+import org.sakaiproject.core.persistence.grades.entity.GradingEvent;
 
 import java.util.Date;
 import java.util.List;

@@ -56,7 +56,7 @@ import org.sakaiproject.core.api.grades.AssignmentHasIllegalPointsException;
 import org.sakaiproject.core.api.grades.ConflictingAssignmentNameException;
 import org.sakaiproject.core.api.grades.ConflictingExternalIdException;
 import org.sakaiproject.core.api.grades.GradeDefinition;
-import org.sakaiproject.core.persistence.grades.model.Gradebook;
+import org.sakaiproject.core.persistence.grades.entity.Gradebook;
 
 /**
  * Confirmation page for what is going to be imported

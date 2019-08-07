@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<registration>
+	<tool id="sakai.core"
+		title="Sakai Core Endpoints"
+		description="Tool for creating endpoints via spring data.">
+    </tool>
+</registration>
