@@ -39,6 +39,8 @@ import org.sakaiproject.core.utils.grades.GradingConstants;
 import org.sakaiproject.section.api.coursemanagement.CourseSection;
 import org.sakaiproject.core.utils.grades.GradingScaleDefinition;
 import org.sakaiproject.section.api.coursemanagement.EnrollmentRecord;
+import org.sakaiproject.tool.api.SessionManager;
+import org.sakaiproject.user.api.PreferencesService;
 import org.sakaiproject.util.ResourceLoader;
 
 import java.lang.reflect.Method;
@@ -68,11 +70,12 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+@Service("org.sakaiproject.core.services.grades.GradingService")
 @Slf4j
 public class GradingServiceImpl implements GradingService {
 
@@ -94,11 +97,11 @@ public class GradingServiceImpl implements GradingService {
     @Resource private GradingScaleRepository gradingScaleRepository;
     @Resource private GradingEventRepository gradingEventRepository;
     @Resource private LetterGradePercentMappingRepository letterGradePercentMappingRepository;
-
     @Resource private GradingPersistenceManager persistence;
     @Resource private GradingPermissionService permissions;
-
+    @Resource(name = "org.sakaiproject.user.api.PreferencesService") private PreferencesService preferences;
     @Resource private SakaiProxy sakaiProxy;
+    @Resource(name = "org.sakaiproject.tool.api.SessionManager") private SessionManager sessionManager;
 
     private Map<String, String> propertiesMap = new HashMap<>();
 
@@ -2572,7 +2575,7 @@ public class GradingServiceImpl implements GradingService {
 		boolean gradeIsValid = false;
 
 		try {
-			final NumberFormat nbFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+			final NumberFormat nbFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 			final Double gradeAsDouble = nbFormat.parse(grade).doubleValue();
 			final String decSeparator = ((DecimalFormat) nbFormat).getDecimalFormatSymbols().getDecimalSeparator() + "";
 
@@ -2610,7 +2613,7 @@ public class GradingServiceImpl implements GradingService {
 			if (gradeEntryType == GradingConstants.GRADE_TYPE_POINTS ||
 					gradeEntryType == GradingConstants.GRADE_TYPE_PERCENTAGE) {
 				try {
-					final NumberFormat nbFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+					final NumberFormat nbFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 					final Double gradeAsDouble = nbFormat.parse(grade).doubleValue();
 					final String decSeparator = ((DecimalFormat) nbFormat).getDecimalFormatSymbols().getDecimalSeparator() + "";
 					// grade must be greater than or equal to 0
@@ -2901,7 +2904,7 @@ public class GradingServiceImpl implements GradingService {
 		if (grade != null && !"".equals(grade)) {
 			if (gradeEntryType == GradingConstants.GRADE_TYPE_POINTS) {
 				try {
-					final NumberFormat nbFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+					final NumberFormat nbFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 					final Double pointValue = nbFormat.parse(grade).doubleValue();
 					convertedValue = pointValue;
 				} catch (NumberFormatException | ParseException nfe) {
@@ -2932,7 +2935,7 @@ public class GradingServiceImpl implements GradingService {
 					}
 				} else {
 					try {
-						final NumberFormat nbFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+						final NumberFormat nbFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 						percentage = nbFormat.parse(grade).doubleValue();
 					} catch (NumberFormatException | ParseException nfe) {
 						throw new IllegalArgumentException("Invalid % grade passed to convertInputGradeToPoints");
@@ -3069,7 +3072,7 @@ public class GradingServiceImpl implements GradingService {
 		}
 
 		// avoid scientific notation on large scores by using a formatter
-		final NumberFormat numberFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+		final NumberFormat numberFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 		final DecimalFormat df = (DecimalFormat) numberFormat;
 		df.setGroupingUsed(false);
 
@@ -3211,7 +3214,7 @@ public class GradingServiceImpl implements GradingService {
 		Double scoreAsDouble = null;
 		if (doubleAsString != null && !"".equals(doubleAsString)) {
 			try {
-				NumberFormat numberFormat = NumberFormat.getInstance(new ResourceLoader().getLocale());
+				NumberFormat numberFormat = NumberFormat.getInstance(preferences.getLocale(sessionManager.getCurrentSessionUserId()));
 				Number numericScore = numberFormat.parse(doubleAsString.trim());
 				scoreAsDouble = numericScore.doubleValue();
 			} catch (ParseException e) {

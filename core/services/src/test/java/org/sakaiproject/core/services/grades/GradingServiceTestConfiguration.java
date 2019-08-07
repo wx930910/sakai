@@ -15,9 +15,11 @@
  */
 package org.sakaiproject.core.services.grades;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -33,6 +35,7 @@ import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 
+import org.sakaiproject.user.api.PreferencesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -109,6 +112,7 @@ public class GradingServiceTestConfiguration {
 
         Session session = mock(Session.class);
         when(session.getUserId()).thenReturn("1518418B-4737-498C-8F0B-7016D912F3FB");
+        when(session.getUserEid()).thenReturn("user1");
 
         SessionManager sessionManager = mock(SessionManager.class);
         when(sessionManager.getCurrentSession()).thenReturn(session);
@@ -149,5 +153,13 @@ public class GradingServiceTestConfiguration {
     @Bean
     public ServerConfigurationService serverConfigurationService() {
         return mock(ServerConfigurationService.class);
+    }
+
+    @Bean(name = "org.sakaiproject.user.api.PreferencesService")
+    public PreferencesService preferencesService() {
+        PreferencesService preferencesService = mock(PreferencesService.class);
+        // TODO Locale.getDefault are tests specfic to the jvm?
+        when(preferencesService.getLocale(anyString())).thenReturn(Locale.getDefault());
+        return preferencesService;
     }
 }

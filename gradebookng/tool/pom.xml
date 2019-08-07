@@ -52,7 +52,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.sakaiproject.core</groupId>
-			<artifactId>api</artifactId>
+			<artifactId>core-services</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.sakaiproject.edu-services.course-management</groupId>
@@ -95,7 +95,6 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.sakaiproject.entitybroker</groupId>

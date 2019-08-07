@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service
+@Service("org.sakaiproject.core.services.grades.GradingPermissionService")
 public class GradingPermissionServiceImpl implements GradingPermissionService {
 
     @Resource
