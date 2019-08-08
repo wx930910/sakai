@@ -17,6 +17,7 @@ import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
 import org.sakaiproject.user.api.UserNotDefinedException;
+import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+@Service("org.sakaiproject.core.services.grades.SakaiProxy")
 @Slf4j
 public class SakaiProxyImpl implements SakaiProxy {
 
@@ -48,15 +50,15 @@ public class SakaiProxyImpl implements SakaiProxy {
 	public static final String UPDATE_SAME_SCORE_PROP = "gradebook.externalAssessments.updateSameScore";
 	public static final boolean UPDATE_SAME_SCORE_PROP_DEFAULT = false;
 
-    @Resource private EventTrackingService eventTrackingService;
-    @Resource private GradingPermissionService gradingPermissionService;
-    @Resource private SectionAwareness sectionAwareness;
-    @Resource private SecurityService securityService;
-    @Resource private ServerConfigurationService serverConfigurationService;
-    @Resource private SessionManager sessionManager;
-    @Resource private SiteService siteService;
-    @Resource private ToolManager toolManager;
-    @Resource private UserDirectoryService userDirectoryService;
+    @Resource(name = "org.sakaiproject.event.api.EventTrackingService") private EventTrackingService eventTrackingService;
+    @Resource(name = "org.sakaiproject.core.services.grades.GradingPermissionService") private GradingPermissionService gradingPermissionService;
+    @Resource(name = "org.sakaiproject.section.api.SectionAwareness") private SectionAwareness sectionAwareness;
+    @Resource(name = "org.sakaiproject.authz.api.SecurityService") private SecurityService securityService;
+    @Resource(name = "org.sakaiproject.component.api.ServerConfigurationService") private ServerConfigurationService serverConfigurationService;
+    @Resource(name = "org.sakaiproject.tool.api.SessionManager") private SessionManager sessionManager;
+    @Resource(name = "org.sakaiproject.site.api.SiteService") private SiteService siteService;
+    @Resource(name = "org.sakaiproject.tool.api.ToolManager") private ToolManager toolManager;
+    @Resource(name = "org.sakaiproject.user.api.UserDirectoryService") private UserDirectoryService userDirectoryService;
 
     public String getCurrentUserId() {
 

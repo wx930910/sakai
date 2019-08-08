@@ -15,9 +15,14 @@
  */
 package org.sakaiproject.core.services.grades;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.sakaiproject.core.services.grades.SakaiProxyImpl.PERMISSION_EDIT_ASSIGNMENTS;
+import static org.sakaiproject.core.services.grades.SakaiProxyImpl.PERMISSION_GRADE_ALL;
+import static org.sakaiproject.core.services.grades.SakaiProxyImpl.PERMISSION_GRADE_SECTION;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -35,7 +40,11 @@ import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
 
+import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.PreferencesService;
+import org.sakaiproject.user.api.User;
+import org.sakaiproject.user.api.UserDirectoryService;
+import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -116,41 +125,38 @@ public class GradingServiceTestConfiguration {
 
         SessionManager sessionManager = mock(SessionManager.class);
         when(sessionManager.getCurrentSession()).thenReturn(session);
+        when(sessionManager.getCurrentSessionUserId()).thenReturn("1518418B-4737-498C-8F0B-7016D912F3FB");
 
         return sessionManager;
     }
 
-    @Bean
+    @Bean(name = "org.sakaiproject.event.api.EventTrackingService")
     public EventTrackingService eventTrackingService() {
         return mock(EventTrackingService.class);
     }
 
-    @Bean
-    public SakaiProxy sakaiProxy() {
-
-        SakaiProxy sakaiProxy = mock(SakaiProxy.class);
-        when(sakaiProxy.getCurrentUserId()).thenReturn("1518418B-4737-498C-8F0B-7016D912F3FB");
-        return sakaiProxy;
-    }
-
-    @Bean
+    @Bean(name = "org.sakaiproject.site.api.SiteService")
     public SiteService siteService() {
-
-        return mock(SiteService.class);
-        //when(siteService.siteReference(gradebookUid)).thenReturn("/site/" + gradebookUid);
+        SiteService siteService = mock(SiteService.class);
+        when(siteService.siteReference(anyString())).thenAnswer(i -> "/site/" + i.getArgument(0));
+        return siteService;
     }
 
-    @Bean
+    @Bean(name = "org.sakaiproject.authz.api.SecurityService")
     public SecurityService securityService() {
-        return mock(SecurityService.class);
+        SecurityService securityService = mock(SecurityService.class);
+        when(securityService.unlock(eq(PERMISSION_EDIT_ASSIGNMENTS), anyString())).thenReturn(Boolean.TRUE);
+        when(securityService.unlock(any(User.class), eq(PERMISSION_GRADE_ALL), anyString())).thenReturn(Boolean.TRUE);
+        // securityService.unlock(user, PERMISSION_GRADE_SECTION, ref)
+        return securityService;
     }
 
-    @Bean
+    @Bean(name = "org.sakaiproject.section.api.SectionAwareness")
     public SectionAwareness sectionAwareness() {
         return mock(SectionAwareness.class);
     }
 
-    @Bean
+    @Bean(name = "org.sakaiproject.component.api.ServerConfigurationService")
     public ServerConfigurationService serverConfigurationService() {
         return mock(ServerConfigurationService.class);
     }
@@ -161,5 +167,20 @@ public class GradingServiceTestConfiguration {
         // TODO Locale.getDefault are tests specfic to the jvm?
         when(preferencesService.getLocale(anyString())).thenReturn(Locale.getDefault());
         return preferencesService;
+    }
+
+    @Bean(name = "org.sakaiproject.tool.api.ToolManager")
+    public ToolManager toolManager() {
+        return mock(ToolManager.class);
+    }
+
+    @Bean(name = "org.sakaiproject.user.api.UserDirectoryService")
+    public UserDirectoryService userDirectoryService() throws UserNotDefinedException {
+        UserDirectoryService uds = mock(UserDirectoryService.class);
+        User user = mock(User.class);
+        when(user.getEid()).thenReturn("user1");
+        when(user.getId()).thenReturn("1518418B-4737-498C-8F0B-7016D912F3FB");
+        when(uds.getUser(eq("1518418B-4737-498C-8F0B-7016D912F3FB"))).thenReturn(user);
+        return uds;
     }
 }

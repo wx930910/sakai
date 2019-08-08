@@ -171,12 +171,12 @@ public class GradingServiceTest extends AbstractTransactionalJUnit4SpringContext
 
         gradingService.addGradebook(this.gbUid, this.gbName);
 
-        doReturn(true).when(sakaiProxy).isUserAbleToEditAssessments(this.gbUid);
+        //doReturn(true).when(sakaiProxy).isUserAbleToEditAssessments(this.gbUid);
         Long assignmentId = gradingService.addAssignment(this.gbUid, this.newAssignment());
 
         try {
-            doReturn(true).when(sakaiProxy).isUserAbleToGrade(this.gbUid);
-            doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, assignmentId, this.studentId);
+            //doReturn(true).when(sakaiProxy).isUserAbleToGrade(this.gbUid);
+            //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, assignmentId, this.studentId);
 	        gradingService.saveGradeAndCommentForStudent(this.gbUid, assignmentId, this.studentId, grade, comment);
             /*
             doReturn(this.studentId).when(sakaiProxy).getCurrentUserId();
@@ -198,13 +198,13 @@ public class GradingServiceTest extends AbstractTransactionalJUnit4SpringContext
         String comment = "Awesome";
 
         gradingService.addGradebook(this.gbUid, this.gbName);
-        doReturn(true).when(sakaiProxy).isUserAbleToEditAssessments(this.gbUid);
+        //doReturn(true).when(sakaiProxy).isUserAbleToEditAssessments(this.gbUid);
         Long assignmentId = gradingService.addAssignment(this.gbUid, this.newAssignment());
 
         Date dateRecorded = new Date();
 
         try {
-            doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, assignmentId, this.studentId);
+            //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, assignmentId, this.studentId);
             GradeDefinition gd1 = new GradeDefinition(this.studentId, this.instructorId, dateRecorded, grade, comment, 0, true, false);
             gradingService.saveGradesAndComments(this.gbUid, assignmentId, Arrays.asList(gd1));
         } catch (Exception e) {
@@ -272,12 +272,12 @@ public class GradingServiceTest extends AbstractTransactionalJUnit4SpringContext
 
         Date dateRecorded = new Date();
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
+        //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
         String grade1 = "20.3";
         GradeDefinition gd1 = new GradeDefinition(this.studentId, null, dateRecorded, grade1, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item1Id, Arrays.asList(gd1));
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
+        // doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
         String grade2 = "16.7";
         GradeDefinition gd2 = new GradeDefinition(this.studentId, null, dateRecorded, grade2, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item2Id, Arrays.asList(gd2));
@@ -328,12 +328,12 @@ public class GradingServiceTest extends AbstractTransactionalJUnit4SpringContext
 
         Date dateRecorded = new Date();
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
+        //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
         String grade1 = "20.3";
         GradeDefinition gd1 = new GradeDefinition(this.studentId, null, dateRecorded, grade1, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item1Id, Arrays.asList(gd1));
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
+        //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
         String grade2 = "16.7";
         GradeDefinition gd2 = new GradeDefinition(this.studentId, null, dateRecorded, grade2, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item2Id, Arrays.asList(gd2));
@@ -374,12 +374,12 @@ public class GradingServiceTest extends AbstractTransactionalJUnit4SpringContext
 
         Date dateRecorded = new Date();
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
+        //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item1Id, this.studentId);
         String grade1 = "20.3";
         GradeDefinition gd1 = new GradeDefinition(this.studentId, null, dateRecorded, grade1, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item1Id, Arrays.asList(gd1));
 
-        doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
+        //doReturn(true).when(sakaiProxy).isUserAbleToGradeItemForStudent(this.gbUid, item2Id, this.studentId);
         String grade2 = "16.7";
         GradeDefinition gd2 = new GradeDefinition(this.studentId, null, dateRecorded, grade2, "", 0, true, false);
         gradingService.saveGradesAndComments(this.gbUid, item2Id, Arrays.asList(gd2));
