@@ -31,106 +31,106 @@ import org.sakaiproject.user.api.UserDirectoryService;
  * Created by buckett on 27/03/2017.
  */
 public class SakaiSecurityConcrete extends SakaiSecurity {
-    private ThreadLocalManager threadLocalManager;
-    private AuthzGroupService authzGroupService;
-    private UserDirectoryService userDirectoryService;
-    private MemoryService memoryService;
-    private EntityManager entityManager;
-    private SessionManager sessionManager;
-    private EventTrackingService eventTrackingService;
-    private FunctionManager functionManager;
-    private SiteService siteService;
-    private ToolManager toolManager;
+	private ThreadLocalManager threadLocalManager;
+	private AuthzGroupService authzGroupService;
+	private UserDirectoryService userDirectoryService;
+	private MemoryService memoryService;
+	private EntityManager entityManager;
+	private SessionManager sessionManager;
+	private EventTrackingService eventTrackingService;
+	private FunctionManager functionManager;
+	private SiteService siteService;
+	private ToolManager toolManager;
 
-    public void setThreadLocalManager(ThreadLocalManager threadLocalManager) {
-        this.threadLocalManager = threadLocalManager;
-    }
+	public void setThreadLocalManager(ThreadLocalManager threadLocalManager) {
+		this.threadLocalManager = threadLocalManager;
+	}
 
-    public void setAuthzGroupService(AuthzGroupService authzGroupService) {
-        this.authzGroupService = authzGroupService;
-    }
+	public void setAuthzGroupService(AuthzGroupService authzGroupService) {
+		this.authzGroupService = authzGroupService;
+	}
 
-    public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
-        this.userDirectoryService = userDirectoryService;
-    }
+	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
+		this.userDirectoryService = userDirectoryService;
+	}
 
-    public void setMemoryService(MemoryService memoryService) {
-        this.memoryService = memoryService;
-    }
+	public void setMemoryService(MemoryService memoryService) {
+		this.memoryService = memoryService;
+	}
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
-    public void setSessionManager(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
-    }
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
+	}
 
-    public void setEventTrackingService(EventTrackingService eventTrackingService) {
-        this.eventTrackingService = eventTrackingService;
-    }
+	public void setEventTrackingService(EventTrackingService eventTrackingService) {
+		this.eventTrackingService = eventTrackingService;
+	}
 
-    public void setFunctionManager(FunctionManager functionManager) {
-        this.functionManager = functionManager;
-    }
+	public void setFunctionManager(FunctionManager functionManager) {
+		this.functionManager = functionManager;
+	}
 
-    public void setSiteService(SiteService siteService) {
-        this.siteService = siteService;
-    }
+	public void setSiteService(SiteService siteService) {
+		this.siteService = siteService;
+	}
 
-    public void setToolManager(ToolManager toolManager) {
-        this.toolManager = toolManager;
-    }
+	public void setToolManager(ToolManager toolManager) {
+		this.toolManager = toolManager;
+	}
 
-    public void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
-        // In parent class
-        this.serverConfigurationService = serverConfigurationService;
-    }
+	public void setServerConfigurationService(ServerConfigurationService serverConfigurationService) {
+		// In parent class
+		this.serverConfigurationService = serverConfigurationService;
+	}
 
-    @Override
-    protected ThreadLocalManager threadLocalManager() {
-        return threadLocalManager;
-    }
+	@Override
+	protected ThreadLocalManager threadLocalManager() {
+		return threadLocalManager;
+	}
 
-    @Override
-    protected AuthzGroupService authzGroupService() {
-        return authzGroupService;
-    }
+	@Override
+	protected AuthzGroupService authzGroupService() {
+		return authzGroupService;
+	}
 
-    @Override
-    protected UserDirectoryService userDirectoryService() {
-        return userDirectoryService;
-    }
+	@Override
+	protected UserDirectoryService userDirectoryService() {
+		return userDirectoryService;
+	}
 
-    @Override
-    protected MemoryService memoryService() {
-        return memoryService;
-    }
+	@Override
+	protected MemoryService memoryService() {
+		return memoryService;
+	}
 
-    @Override
-    protected EntityManager entityManager() {
-        return entityManager;
-    }
+	@Override
+	protected EntityManager entityManager() {
+		return entityManager;
+	}
 
-    @Override
-    protected SessionManager sessionManager() {
-        return sessionManager;
-    }
+	@Override
+	protected SessionManager sessionManager() {
+		return sessionManager;
+	}
 
-    @Override
-    protected EventTrackingService eventTrackingService() {
-        return eventTrackingService;
-    }
+	@Override
+	protected EventTrackingService eventTrackingService() {
+		return eventTrackingService;
+	}
 
-    @Override
-    protected FunctionManager functionManager() {
-        return functionManager;
-    }
+	@Override
+	protected FunctionManager functionManager() {
+		return functionManager;
+	}
 
-    @Override
-    protected SiteService siteService() {
-        return siteService;
-    }
+	@Override
+	protected SiteService siteService() {
+		return siteService;
+	}
 
 	@Override
 	protected ToolManager toolManager() {

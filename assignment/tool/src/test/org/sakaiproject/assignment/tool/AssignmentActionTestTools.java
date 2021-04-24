@@ -17,7 +17,9 @@ package org.sakaiproject.assignment.tool;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -49,71 +51,76 @@ import org.sakaiproject.util.api.FormattedText;
  */
 @SuppressWarnings("deprecation")
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ComponentManager.class})
+@PrepareForTest({ ComponentManager.class })
 public class AssignmentActionTestTools {
 
-    private AssignmentAction assignmentAction;
-    @Mock
-    private AssignmentService assignmentService;
-    @Mock
-    private FormattedText formattedText;
+	private AssignmentAction assignmentAction;
+	@Mock
+	private AssignmentService assignmentService;
+	@Mock
+	private FormattedText formattedText;
 
-    @Before
-    public void setUp() {
-        BasicConfigurator.configure();
-        PowerMockito.mockStatic(ComponentManager.class);
-        // A mock component manager.
-        when(ComponentManager.get(any(Class.class))).then(new Answer<Object>() {
-            private Map<Class, Object> mocks = new HashMap<>();
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Class classToMock = (Class) invocation.getArguments()[0];
-                return mocks.computeIfAbsent(classToMock, k -> mock(classToMock));
-            }
-        });
-        
-        when(ComponentManager.get(SessionManager.class).getCurrentSession()).thenReturn(mock(Session.class));
-        when(formattedText.getDecimalSeparator()).thenReturn(".");
-        
-        when(formattedText.getNumberFormat()).thenReturn(NumberFormat.getInstance(Locale.ENGLISH));
-        assignmentAction = new AssignmentAction();
+	@Before
+	public void setUp() {
+		BasicConfigurator.configure();
+		PowerMockito.mockStatic(ComponentManager.class);
+		// A mock component manager.
+		when(ComponentManager.get(any(Class.class))).then(new Answer<Object>() {
+			private Map<Class, Object> mocks = new HashMap<>();
 
-        Mockito.when(ComponentManager.get(AssignmentService.class)).thenReturn(assignmentService);
+			@Override
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				Class classToMock = (Class) invocation.getArguments()[0];
+				return mocks.computeIfAbsent(classToMock, k -> mock(classToMock));
+			}
+		});
 
-    }
+		when(ComponentManager.get(SessionManager.class).getCurrentSession()).thenReturn(mock(Session.class));
+		when(formattedText.getDecimalSeparator()).thenReturn(".");
 
-    //This probably should also be moved from AssignmentAction to a util or something
-    public Integer getScaleFactor(Integer decimals) {		
-        return (int)Math.pow(10.0, decimals);
-    }
+		when(formattedText.getNumberFormat()).thenReturn(NumberFormat.getInstance(Locale.ENGLISH));
+		assignmentAction = new AssignmentAction();
 
-    @Test
-    public void testScalePointGrade() {
-        SessionState state = new SessionStateFake();
-        //Simple state?
+		Mockito.when(ComponentManager.get(AssignmentService.class)).thenReturn(assignmentService);
 
-        Integer decimals=2;
-        when(ServerConfigurationService.getInt("assignment.grading.decimals", AssignmentConstants.DEFAULT_DECIMAL_POINT)).thenReturn(decimals);
-        String scaledGrade = assignmentAction.scalePointGrade(state, ".7",getScaleFactor(decimals));
-        assertEquals(scaledGrade,"70");
-        //Verify the state message is null
-        assertEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
-        state.clear();
-        
-        /* This case is broken at the moment but it does return invalid in the state
-         */
-        scaledGrade = assignmentAction.scalePointGrade(state, "1.23456789",getScaleFactor(decimals));
-        assertEquals(scaledGrade,"1.23456789");
-        //Verify the state message isn't null (indicating an error)
-        assertNotEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
-        state.clear();
+	}
 
-        decimals=4;
-        when(ServerConfigurationService.getInt("assignment.grading.decimals", AssignmentConstants.DEFAULT_DECIMAL_POINT)).thenReturn(decimals);
-        scaledGrade = assignmentAction.scalePointGrade(state, ".7",getScaleFactor(decimals));
-        assertEquals(scaledGrade,"7000");
-        //Verify the state message is null
-        assertEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
-        state.clear();
-    }
+	// This probably should also be moved from AssignmentAction to a util or
+	// something
+	public Integer getScaleFactor(Integer decimals) {
+		return (int) Math.pow(10.0, decimals);
+	}
+
+	@Test
+	public void testScalePointGrade() {
+		SessionState state = SessionStateFake.mockSessionState1();
+		// Simple state?
+
+		Integer decimals = 2;
+		when(ServerConfigurationService.getInt("assignment.grading.decimals",
+				AssignmentConstants.DEFAULT_DECIMAL_POINT)).thenReturn(decimals);
+		String scaledGrade = assignmentAction.scalePointGrade(state, ".7", getScaleFactor(decimals));
+		assertEquals(scaledGrade, "70");
+		// Verify the state message is null
+		assertEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
+		state.clear();
+
+		/*
+		 * This case is broken at the moment but it does return invalid in the state
+		 */
+		scaledGrade = assignmentAction.scalePointGrade(state, "1.23456789", getScaleFactor(decimals));
+		assertEquals(scaledGrade, "1.23456789");
+		// Verify the state message isn't null (indicating an error)
+		assertNotEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
+		state.clear();
+
+		decimals = 4;
+		when(ServerConfigurationService.getInt("assignment.grading.decimals",
+				AssignmentConstants.DEFAULT_DECIMAL_POINT)).thenReturn(decimals);
+		scaledGrade = assignmentAction.scalePointGrade(state, ".7", getScaleFactor(decimals));
+		assertEquals(scaledGrade, "7000");
+		// Verify the state message is null
+		assertEquals(state.getAttribute(AssignmentAction.STATE_MESSAGE), null);
+		state.clear();
+	}
 }

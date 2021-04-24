@@ -21,7 +21,8 @@
 
 package org.sakaiproject.portal.charon.test;
 
-import java.util.Enumeration;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.sakaiproject.tool.api.ToolSession;
 
@@ -29,100 +30,17 @@ import org.sakaiproject.tool.api.ToolSession;
  * @author ieb
  *
  */
-public class MockToolSession implements ToolSession
-{
+public class MockToolSession {
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#clearAttributes()
-	 */
-	public void clearAttributes()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getAttribute(java.lang.String)
-	 */
-	public Object getAttribute(String name)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getAttributeNames()
-	 */
-	public Enumeration getAttributeNames()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getCreationTime()
-	 */
-	public long getCreationTime()
-	{
-		return 1001;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getId()
-	 */
-	public String getId()
-	{
-		return "toolSessionID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getLastAccessedTime()
-	 */
-	public long getLastAccessedTime()
-	{
-		return 1002;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getPlacementId()
-	 */
-	public String getPlacementId()
-	{
-		return "ToolSession.placementId";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getUserEid()
-	 */
-	public String getUserEid()
-	{
-		return "ToolSession.userEID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#getUserId()
-	 */
-	public String getUserId()
-	{
-		return "ToolSession.userID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#removeAttribute(java.lang.String)
-	 */
-	public void removeAttribute(String name)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.ToolSession#setAttribute(java.lang.String, java.lang.Object)
-	 */
-	public void setAttribute(String name, Object value)
-	{
-		// TODO Auto-generated method stub
-
+	public static ToolSession mockToolSession1() {
+		ToolSession mockInstance = mock(ToolSession.class);
+		when(mockInstance.getId()).thenReturn("toolSessionID");
+		when(mockInstance.getCreationTime()).thenReturn((long) 1001);
+		when(mockInstance.getPlacementId()).thenReturn("ToolSession.placementId");
+		when(mockInstance.getUserId()).thenReturn("ToolSession.userID");
+		when(mockInstance.getUserEid()).thenReturn("ToolSession.userEID");
+		when(mockInstance.getLastAccessedTime()).thenReturn((long) 1002);
+		return mockInstance;
 	}
 
 }

@@ -21,14 +21,14 @@
 
 package org.sakaiproject.portal.charon.test;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +36,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 
-import lombok.extern.slf4j.Slf4j;
-import org.w3c.tidy.Tidy;
-
 import org.sakaiproject.portal.api.PortalRenderContext;
 import org.sakaiproject.portal.charon.velocity.VelocityPortalRenderEngine;
+import org.w3c.tidy.Tidy;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -50,8 +50,7 @@ import org.sakaiproject.portal.charon.velocity.VelocityPortalRenderEngine;
  * </p>
  */
 @Slf4j
-public class MockCharonPortal extends HttpServlet
-{
+public class MockCharonPortal extends HttpServlet {
 	private VelocityPortalRenderEngine rengine;
 
 	private File outputDir;
@@ -60,8 +59,7 @@ public class MockCharonPortal extends HttpServlet
 
 	private Object resourceLoader;
 
-	public MockCharonPortal(File outputDir) throws Exception
-	{
+	public MockCharonPortal(File outputDir) throws Exception {
 		this.outputDir = outputDir;
 		String renderEngineClass = VelocityPortalRenderEngine.class.getName();
 
@@ -73,21 +71,18 @@ public class MockCharonPortal extends HttpServlet
 
 	}
 
-
-	public void doError(boolean withSession, boolean withToolSession) throws IOException
-	{
+	public void doError(boolean withSession, boolean withToolSession) throws IOException {
 
 		// start the response
 		PortalRenderContext rcontext = startPageContext();
-		
-		
-		if ( withSession ) {
-			rcontext.put("s", new MockSession());
+
+		if (withSession) {
+			rcontext.put("s", MockSession.mockSession1());
 		}
-		if ( withToolSession ) {
-			rcontext.put("ts", new MockToolSession());
+		if (withToolSession) {
+			rcontext.put("ts", MockToolSession.mockToolSession1());
 		}
-		
+
 		rcontext.put("req", new MockHttpServletRequest());
 
 		showSession(rcontext);
@@ -97,8 +92,7 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "error");
 	}
 
-	private void showSnoop(PortalRenderContext rcontext)
-	{
+	private void showSnoop(PortalRenderContext rcontext) {
 
 		rcontext.put("snoopRequest", "snoopRequest");
 
@@ -113,8 +107,7 @@ public class MockCharonPortal extends HttpServlet
 		rcontext.put("snoopRequestAttr", m);
 	}
 
-	public void doGallery() throws IOException
-	{
+	public void doGallery() throws IOException {
 		PortalRenderContext rcontext = startPageContext();
 
 		// the 'little' top area
@@ -127,8 +120,7 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "gallery");
 	}
 
-	public void doNavLogin() throws IOException
-	{
+	public void doNavLogin() throws IOException {
 		// start the response
 		PortalRenderContext rcontext = startPageContext();
 
@@ -137,8 +129,7 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "login");
 	}
 
-	public void doPage() throws IOException
-	{
+	public void doPage() throws IOException {
 		PortalRenderContext rcontext = startPageContext();
 
 		includePage(rcontext);
@@ -148,10 +139,9 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "page");
 	}
 
-	private PortalRenderContext startPageContext()
-	{
+	private PortalRenderContext startPageContext() {
 		PortalRenderContext rcontext = rengine.newRenderContext(null);
-		
+
 		rcontext.put("pageSkinRepo", "skinRepo");
 		rcontext.put("pageSkin", "skin");
 		rcontext.put("pageTitle", "Web.escapeHtml(title)");
@@ -161,29 +151,30 @@ public class MockCharonPortal extends HttpServlet
 		rcontext.put("pageSiteType", "class=\"siteType\" ");
 		rcontext.put("toolParamResetState", "PARM_STATE_RESET");
 		rcontext.put("rloader", resourceLoader);
-		
-                String headCssToolBase = "<link href=\""
-                        + "/tool_base.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />\n";
-                String headCssToolSkin = "<link href=\"" 
-                + "/tool.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />\n";
-                String headCss = headCssToolBase + headCssToolSkin;
-                String headJs = "<script type=\"text/javascript\" src=\"/library/js/headscripts.js\"></script>\n";
-                String head = headCss + headJs;
 
-                rcontext.put("sakai_html_head", head);
-                rcontext.put("sakai_html_head_css", headCss);
-                rcontext.put("sakai_html_head_css_base", headCssToolBase);
-                rcontext.put("sakai_html_head_css_skin", headCssToolSkin);
-                rcontext.put("sakai_html_head_js", headJs);
+		String headCssToolBase = "<link href=\""
+				+ "/tool_base.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />\n";
+		String headCssToolSkin = "<link href=\""
+				+ "/tool.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />\n";
+		String headCss = headCssToolBase + headCssToolSkin;
+		String headJs = "<script type=\"text/javascript\" src=\"/library/js/headscripts.js\"></script>\n";
+		String head = headCss + headJs;
+
+		rcontext.put("sakai_html_head", head);
+		rcontext.put("sakai_html_head_css", headCss);
+		rcontext.put("sakai_html_head_css_base", headCssToolBase);
+		rcontext.put("sakai_html_head_css_skin", headCssToolSkin);
+		rcontext.put("sakai_html_head_js", headJs);
 
 		rcontext.put("sitReset", "sitReset");
-		//rcontext.put("browser", new BrowserDetector("Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en) AppleWebKit/523.12.2 (KHTML, like Gecko) Version/3.0.4 Safari/523.12.2"));
+		// rcontext.put("browser", new BrowserDetector("Mozilla/5.0 (Macintosh; U; Intel
+		// Mac OS X; en) AppleWebKit/523.12.2 (KHTML, like Gecko) Version/3.0.4
+		// Safari/523.12.2"));
 
 		return rcontext;
 	}
 
-	public void doSite() throws IOException
-	{
+	public void doSite() throws IOException {
 		PortalRenderContext rcontext = startPageContext();
 
 		// the 'full' top area
@@ -197,8 +188,7 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "site");
 	}
 
-	public void doWorksite() throws IOException
-	{
+	public void doWorksite() throws IOException {
 
 		PortalRenderContext rcontext = startPageContext();
 
@@ -210,8 +200,7 @@ public class MockCharonPortal extends HttpServlet
 		sendResponse(rcontext, "worksite");
 	}
 
-	protected void includeBottom(PortalRenderContext rcontext)
-	{
+	protected void includeBottom(PortalRenderContext rcontext) {
 
 		rcontext.put("pagepopup", false);
 		{
@@ -248,17 +237,15 @@ public class MockCharonPortal extends HttpServlet
 		rcontext.put("bottomNavServiceVersion", "serviceVersion");
 		rcontext.put("bottomNavSakaiVersion", "sakaiVersion");
 		rcontext.put("bottomNavServer", "server");
-                rcontext.put("userWarning", Boolean.FALSE);
+		rcontext.put("userWarning", Boolean.FALSE);
 
 	}
 
-	protected void includeGalleryLogin(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeGalleryLogin(PortalRenderContext rcontext) throws IOException {
 		includeLogin(rcontext);
 	}
 
-	protected void includeGalleryNav(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeGalleryNav(PortalRenderContext rcontext) throws IOException {
 		rcontext.put("galleryHasAccessibilityURL", Boolean.valueOf(true));
 
 		rcontext.put("galleryAccessibilityURL", "accessibilityURL");
@@ -271,8 +258,7 @@ public class MockCharonPortal extends HttpServlet
 
 	}
 
-	protected void includeLogo(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeLogo(PortalRenderContext rcontext) throws IOException {
 		rcontext.put("logoSkin", "skin");
 		rcontext.put("logoSkinRepo", "skinRepo");
 		rcontext.put("logoSiteType", "siteType");
@@ -280,8 +266,7 @@ public class MockCharonPortal extends HttpServlet
 		includeLogin(rcontext);
 	}
 
-	protected void includeLogin(PortalRenderContext rcontext)
-	{
+	protected void includeLogin(PortalRenderContext rcontext) {
 
 		rcontext.put("loginTopLogin", Boolean.valueOf(true));
 		rcontext.put("loginLogInOutUrl", "logInOutUrl");
@@ -300,8 +285,7 @@ public class MockCharonPortal extends HttpServlet
 		rcontext.put("loginWording", "loginWording");
 	}
 
-	protected void includePage(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includePage(PortalRenderContext rcontext) throws IOException {
 		// divs to wrap the tools
 		rcontext.put("pageWrapperClass", "wrapperClass");
 		rcontext.put("pageColumnLayout", "col1of2");
@@ -320,8 +304,7 @@ public class MockCharonPortal extends HttpServlet
 		}
 	}
 
-	protected void includePageNav(Map rcontext) throws IOException
-	{
+	protected void includePageNav(Map rcontext) throws IOException {
 		rcontext.put("pageNavPublished", Boolean.valueOf(true));
 		rcontext.put("pageNavType", "type");
 		rcontext.put("pageNavIconUrl", "iconUrl");
@@ -348,7 +331,7 @@ public class MockCharonPortal extends HttpServlet
 		m.put("menuClass", "MenuClass");
 		m.put("pageRefUrl", "pageRefURL");
 		m.put("pageSiteRefURL", "siteRefURL");
-		m.put("pageTitle","pageTitle");
+		m.put("pageTitle", "pageTitle");
 
 		l.add(m);
 		rcontext.put("pageNavTools", l);
@@ -360,13 +343,12 @@ public class MockCharonPortal extends HttpServlet
 		rcontext.put("pageNavToolsCount", l.size());
 		rcontext.put("pageNavShowPresenceLoggedIn", Boolean.valueOf(true));
 		rcontext.put("pageNavPresenceUrl", "presenceUrl");
-                rcontext.put("sakaiPresenceTimeDelay", Integer.valueOf(3000));
+		rcontext.put("sakaiPresenceTimeDelay", Integer.valueOf(3000));
 		// rcontext.put("pageNavSitContentshead", "sit_contentshead");
 
 	}
 
-	protected void includeSiteNav(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeSiteNav(PortalRenderContext rcontext) throws IOException {
 		rcontext.put("siteNavHasAccessibilityURL", Boolean.valueOf((true)));
 		rcontext.put("siteNavAccessibilityURL", "accessibilityURL");
 		rcontext.put("siteNavLoggedIn", Boolean.valueOf(true));
@@ -375,8 +357,7 @@ public class MockCharonPortal extends HttpServlet
 		includeTabs(rcontext);
 	}
 
-	protected void includeTabs(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeTabs(PortalRenderContext rcontext) throws IOException {
 
 		rcontext.put("tabsCssClass", "cssClass");
 		// rcontext.put("tabsSitWorksiteHead", "sit_worksiteshead");
@@ -418,8 +399,7 @@ public class MockCharonPortal extends HttpServlet
 		// rcontext.put("tabsSitLog", "sit_log");
 	}
 
-	protected Map includeTool() throws IOException
-	{
+	protected Map includeTool() throws IOException {
 		Map toolMap = new HashMap();
 		toolMap.put("toolUrl", "toolUrl");
 		toolMap.put("toolPlacementIDJS", "Main_" + System.currentTimeMillis());
@@ -428,12 +408,11 @@ public class MockCharonPortal extends HttpServlet
 		toolMap.put("toolShowHelpButton", Boolean.valueOf(true));
 		toolMap.put("toolHelpActionUrl", "helpActionUrl");
 		toolMap.put("toolResetActionUrl", "toolResetActionUrl");
-		
+
 		return toolMap;
 	}
 
-	protected void includeWorksite(PortalRenderContext rcontext) throws IOException
-	{
+	protected void includeWorksite(PortalRenderContext rcontext) throws IOException {
 		Map sitePages = new HashMap();
 		rcontext.put("sitePages", sitePages);
 		// add the page navigation with presence
@@ -446,38 +425,29 @@ public class MockCharonPortal extends HttpServlet
 	/**
 	 * Output some session information
 	 * 
-	 * @param rcontext
-	 *        The print writer
-	 * @param html
-	 *        If true, output in HTML, else in text.
+	 * @param rcontext The print writer
+	 * @param html     If true, output in HTML, else in text.
 	 */
-	protected void showSession(PortalRenderContext rcontext)
-	{
+	protected void showSession(PortalRenderContext rcontext) {
 		rcontext.put("sessionSession", "s");
 		rcontext.put("sessionToolSession", "ts");
 	}
 
-	protected void sendResponse(PortalRenderContext rcontext, String template)
-			throws IOException
-	{
+	protected void sendResponse(PortalRenderContext rcontext, String template) throws IOException {
 		// get the writer
-		if ( outputFile == null ) {
+		if (outputFile == null) {
 			outputFile = template;
 		}
-		File htmlOut = new File(outputDir,outputFile+".html");
-		File tidyOut = new File(outputDir,outputFile+".html.tidy.txt");
-		File errorFile = new File(outputDir,outputFile+".html.tidy.err");
-		
+		File htmlOut = new File(outputDir, outputFile + ".html");
+		File tidyOut = new File(outputDir, outputFile + ".html.tidy.txt");
+		File errorFile = new File(outputDir, outputFile + ".html.tidy.err");
+
 		FileWriter f = new FileWriter(htmlOut);
 
-
-		try
-		{
-			log.info("Rendering " + rcontext + " to " + htmlOut);
+		try {
+//			log.info("Rendering " + rcontext + " to " + htmlOut);
 			rengine.render(template, rcontext, f);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new RuntimeException("Failed to render template ", e);
 		}
 		f.close();
@@ -499,58 +469,53 @@ public class MockCharonPortal extends HttpServlet
 		// JTidy r938 became more agressive about warnings
 		// Morpheus uses HTML5 tags which JTidy does not grok so we need
 		// to actually read and parse the error output
-		if ( e != 0 ) {
+		if (e != 0) {
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(errorFile));
 				String thisLine;
 				while ((thisLine = br.readLine()) != null) { // while loop begins here
-					log.debug(thisLine);
-					if ( thisLine.indexOf("Error:") < 0 ) continue;
-					if ( thisLine.indexOf("is not recognized") > 0 ) continue;
-					log.info("Context Dump is " + rcontext.dump());
-					throw new RuntimeException("Error in HTML see "+errorFile+" "+thisLine);
-				} 
-			} 
-			catch (IOException ex) {
-				log.info("File read error " + ex);
-				throw new RuntimeException("File read error "+ex);
+//					log.debug(thisLine);
+					if (thisLine.indexOf("Error:") < 0)
+						continue;
+					if (thisLine.indexOf("is not recognized") > 0)
+						continue;
+//					log.info("Context Dump is " + rcontext.dump());
+					throw new RuntimeException("Error in HTML see " + errorFile + " " + thisLine);
+				}
+			} catch (IOException ex) {
+//				log.info("File read error " + ex);
+				throw new RuntimeException("File read error " + ex);
 			}
 		}
-		log.info("All OK");
-		
-		
+//		log.info("All OK");
 
 	}
 
 	/**
 	 * @return the outputFile
 	 */
-	public String getOutputFile()
-	{
+	public String getOutputFile() {
 		return outputFile;
 	}
 
 	/**
 	 * @param outputFile the outputFile to set
 	 */
-	public void setOutputFile(String outputFile)
-	{
+	public void setOutputFile(String outputFile) {
 		this.outputFile = outputFile;
 	}
 
 	/**
 	 * @return the resourceLoader
 	 */
-	public Object getResourceLoader()
-	{
+	public Object getResourceLoader() {
 		return resourceLoader;
 	}
 
 	/**
 	 * @param resourceLoader the resourceLoader to set
 	 */
-	public void setResourceLoader(Object resourceLoader)
-	{
+	public void setResourceLoader(Object resourceLoader) {
 		this.resourceLoader = resourceLoader;
 	}
 

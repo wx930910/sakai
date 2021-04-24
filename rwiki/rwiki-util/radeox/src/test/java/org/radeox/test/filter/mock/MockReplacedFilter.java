@@ -23,33 +23,23 @@
 
 package org.radeox.test.filter.mock;
 
-import org.radeox.api.engine.context.InitialRenderContext;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.radeox.filter.Filter;
 import org.radeox.filter.context.FilterContext;
 
-public class MockReplacedFilter implements Filter
-{
-	public String filter(String input, FilterContext context)
-	{
-		return input;
-	}
-
-	public void setInitialContext(InitialRenderContext context)
-	{
-	}
-
-	public String[] replaces()
-	{
-		return new String[0];
-	}
-
-	public String[] before()
-	{
-		return new String[0];
-	}
-
-	public String getDescription()
-	{
-		return "";
+public class MockReplacedFilter {
+	public static Filter mockFilter1() {
+		Filter mockInstance = mock(Filter.class);
+		when(mockInstance.getDescription()).thenReturn("");
+		when(mockInstance.filter(any(String.class), any(FilterContext.class))).thenAnswer((stubInvo) -> {
+			String input = stubInvo.getArgument(0);
+			return input;
+		});
+		when(mockInstance.before()).thenReturn(new String[0]);
+		when(mockInstance.replaces()).thenReturn(new String[0]);
+		return mockInstance;
 	}
 }

@@ -15,16 +15,15 @@
  */
 package org.sakaiproject.conditions.impl;
 
-import java.util.Map;
+import static org.mockito.Mockito.mock;
 
-import org.sakaiproject.conditions.api.Condition;
 import org.sakaiproject.conditions.api.ConditionTemplate;
 
-public class MyConditionTemplate implements ConditionTemplate {
+public class MyConditionTemplate {
 
-	public Condition conditionFromParameters(Map<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
+	public static ConditionTemplate mockConditionTemplate1() {
+		ConditionTemplate mockInstance = mock(ConditionTemplate.class);
+		return mockInstance;
 	}
 
 }

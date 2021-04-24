@@ -15,30 +15,27 @@
  */
 package org.sakaiproject.conditions.impl;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.sakaiproject.conditions.api.ConditionTemplate;
 import org.sakaiproject.conditions.api.ConditionTemplateSet;
 
-public class MyConditionTemplateSet implements ConditionTemplateSet {
-	private Set<ConditionTemplate> myConditionTemplates = new HashSet<ConditionTemplate>();
-	
-	public MyConditionTemplateSet() {
-		ConditionTemplate aConditionTemplate = new MyConditionTemplate();
-		myConditionTemplates.add(aConditionTemplate);
-	}
-
-	public Set<ConditionTemplate> getConditionTemplates() {
-		return myConditionTemplates;
-	}
-
-	public String getDisplayName() {
-		return "Gradebook";
-	}
-
-	public String getId() {
-		return "sakai.service.gradebook";
+public class MyConditionTemplateSet {
+	public static ConditionTemplateSet mockConditionTemplateSet1() {
+		Set<ConditionTemplate> mockFieldVariableMyConditionTemplates = new HashSet<ConditionTemplate>();
+		ConditionTemplateSet mockInstance = mock(ConditionTemplateSet.class);
+		ConditionTemplate aConditionTemplate = MyConditionTemplate.mockConditionTemplate1();
+		mockFieldVariableMyConditionTemplates.add(aConditionTemplate);
+		when(mockInstance.getId()).thenReturn("sakai.service.gradebook");
+		when(mockInstance.getConditionTemplates()).thenAnswer((stubInvo) -> {
+			return mockFieldVariableMyConditionTemplates;
+		});
+		when(mockInstance.getDisplayName()).thenReturn("Gradebook");
+		return mockInstance;
 	}
 
 }

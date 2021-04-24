@@ -15,15 +15,25 @@
  */
 package org.sakaiproject.conditions.impl;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+
 import org.sakaiproject.conditions.api.EvaluationAction;
 import org.sakaiproject.event.api.Event;
 
-public class ToyCommand implements EvaluationAction{
-	
-	public void execute(Event e, boolean evalResult) throws Exception {
-		ToyMessagePad.messages.add("I've been hit!");
-		ToyMessagePad.messages.add(e.getResource());
-		
+public class ToyCommand {
+
+	public static EvaluationAction mockEvaluationAction1() throws Exception {
+		EvaluationAction mockInstance = mock(EvaluationAction.class);
+		doAnswer((stubInvo) -> {
+			Event e = stubInvo.getArgument(0);
+			ToyMessagePad.messages.add("I've been hit!");
+			ToyMessagePad.messages.add(e.getResource());
+			return null;
+		}).when(mockInstance).execute(any(), anyBoolean());
+		return mockInstance;
 	}
 
 }

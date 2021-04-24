@@ -27,17 +27,17 @@ import org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSe
 import org.sakaiproject.content.impl.serialize.impl.Type1BaseContentResourceSerializer;
 import org.sakaiproject.entity.api.serialize.EntityParseException;
 
-public class Type1BaseContentResourceSerializerTest
-{
+public class Type1BaseContentResourceSerializerTest {
 	/**
-	 * Test method for {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#parse(org.sakaiproject.entity.api.serialize.SerializableEntity, java.lang.String)}.
-	 * @throws Exception 
+	 * Test method for
+	 * {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#parse(org.sakaiproject.entity.api.serialize.SerializableEntity, java.lang.String)}.
+	 * 
+	 * @throws Exception
 	 */
 	@Test
-	public final void testParse() throws Exception
-	{
+	public final void testParse() throws Exception {
 		Type1BaseContentResourceSerializer t1 = new Type1BaseContentResourceSerializer();
-		t1.setTimeService(new MockTimeService());
+		t1.setTimeService(MockTimeService.mockTimeService1());
 		MockSerializableResourceAcccess sc = new MockSerializableResourceAcccess();
 		byte[] serialized = t1.serialize(sc);
 		t1.parse(sc, serialized);
@@ -45,37 +45,41 @@ public class Type1BaseContentResourceSerializerTest
 	}
 
 	/**
-	 * Test method for {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#serialize(org.sakaiproject.entity.api.serialize.SerializableEntity)}.
-	 * @throws Exception 
+	 * Test method for
+	 * {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#serialize(org.sakaiproject.entity.api.serialize.SerializableEntity)}.
+	 * 
+	 * @throws Exception
 	 */
 	@Test
-	public final void testSerialize() throws Exception
-	{
+	public final void testSerialize() throws Exception {
 		Type1BaseContentResourceSerializer t1 = new Type1BaseContentResourceSerializer();
-		t1.setTimeService(new MockTimeService());
+		t1.setTimeService(MockTimeService.mockTimeService1());
 		MockSerializableResourceAcccess sc = new MockSerializableResourceAcccess();
 		byte[] s = t1.serialize(sc);
 		MockSerializableCollectionAcccess sr = new MockSerializableCollectionAcccess();
 		try {
 			byte[] s1 = t1.serialize(sr);
 			Assert.fail("Should have refused to MockSerializableCollectionAcccess a ResourceAccess Object ");
-		} catch ( EntityParseException epe ) {
-			
+		} catch (EntityParseException epe) {
+
 		}
 	}
 
 	/**
-	 * Test method for {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#accept(java.lang.String)}.
+	 * Test method for
+	 * {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#accept(java.lang.String)}.
 	 */
 	@Test
-	public final void testAccept()
-	{
+	public final void testAccept() {
 		Type1BaseContentResourceSerializer t1 = new Type1BaseContentResourceSerializer();
-		
-		Assert.assertEquals(true,t1.accept((Type1BaseContentResourceSerializer.BLOB_ID+"the rest of the  blob").getBytes()));
-		Assert.assertEquals(false,t1.accept((Type1BaseContentCollectionSerializer.BLOB_ID+"the rest of the  blob").getBytes()));
-		Assert.assertEquals(false,t1.accept(("0"+Type1BaseContentResourceSerializer.BLOB_ID+"the rest of the  blob").getBytes()));
-		Assert.assertEquals(false,t1.accept(null));
-		Assert.assertEquals(false,t1.accept(("0somethisdfjsdkjfs dfjsldkf").getBytes()));
+
+		Assert.assertEquals(true,
+				t1.accept((Type1BaseContentResourceSerializer.BLOB_ID + "the rest of the  blob").getBytes()));
+		Assert.assertEquals(false,
+				t1.accept((Type1BaseContentCollectionSerializer.BLOB_ID + "the rest of the  blob").getBytes()));
+		Assert.assertEquals(false,
+				t1.accept(("0" + Type1BaseContentResourceSerializer.BLOB_ID + "the rest of the  blob").getBytes()));
+		Assert.assertEquals(false, t1.accept(null));
+		Assert.assertEquals(false, t1.accept(("0somethisdfjsdkjfs dfjsldkf").getBytes()));
 	}
 }

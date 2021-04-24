@@ -19,45 +19,47 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.sakaiproject.conditions.api.EvaluationAction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.sakaiproject.conditions.api.Condition;
 import org.sakaiproject.conditions.api.ConditionService;
+import org.sakaiproject.conditions.api.EvaluationAction;
 import org.sakaiproject.conditions.api.Rule;
 import org.sakaiproject.event.api.Event;
 import org.sakaiproject.event.api.LearningResourceStoreService.LRS_Statement;
 
 public class TestConditionService {
-	
+
 	private ConditionService conditionService;
-	
+
 	@Before
 	public void setUp() {
 		conditionService = new ToyConditionsService();
-		conditionService.registerConditionTemplates(new MyConditionTemplateSet());
+		conditionService.registerConditionTemplates(MyConditionTemplateSet.mockConditionTemplateSet1());
 	}
-	
+
 	@Test
 	public void testRegisterTemplates() {
-		Assert.assertEquals("Gradebook", conditionService.getConditionTemplateSetForService("sakai.service.gradebook").getDisplayName());
+		Assert.assertEquals("Gradebook",
+				conditionService.getConditionTemplateSetForService("sakai.service.gradebook").getDisplayName());
 	}
-	
+
 	@Test
-	public void testSaveRuleAndNotify() {
-		EvaluationAction command = new ToyCommand();
+	public void testSaveRuleAndNotify() throws Exception {
+		EvaluationAction command = ToyCommand.mockEvaluationAction1();
 		String resourceId = "zach-makes-the-best-conditions";
 		List<Condition> conditions = new ArrayList<Condition>();
 		conditions.add(numberLessThan100());
-		
-		conditionService.addRule("gradebook.newgrade",new BaseRule(resourceId, conditions, command, Rule.Conjunction.OR));
-		
-		((ToyConditionsService)conditionService).dispatchAnEvent(newUserEvent());
+
+		conditionService.addRule("gradebook.newgrade",
+				new BaseRule(resourceId, conditions, command, Rule.Conjunction.OR));
+
+		((ToyConditionsService) conditionService).dispatchAnEvent(newUserEvent());
 		Assert.assertEquals(0, ToyMessagePad.messages.size());
-		
-		((ToyConditionsService)conditionService).dispatchAnEvent(newGrade69Event());
-		Assert.assertEquals("I've been hit!",ToyMessagePad.messages.get(0));
+
+		((ToyConditionsService) conditionService).dispatchAnEvent(newGrade69Event());
+		Assert.assertEquals("I've been hit!", ToyMessagePad.messages.get(0));
 	}
 
 	private Event newGrade69Event() {
@@ -85,9 +87,9 @@ public class TestConditionService {
 			public String getResource() {
 				return "69";
 			}
-			
+
 			public LRS_Statement getLrsStatement() {
-				return null; 
+				return null;
 			}
 
 			public String getSessionId() {
@@ -136,7 +138,7 @@ public class TestConditionService {
 			public String getResource() {
 				return "zt10";
 			}
-			
+
 			public LRS_Statement getLrsStatement() {
 				return null;
 			}
@@ -159,7 +161,7 @@ public class TestConditionService {
 			public boolean isTransient() {
 				return false;
 			}
-			
+
 		};
 	}
 
@@ -187,7 +189,7 @@ public class TestConditionService {
 			}
 
 			public boolean evaluate(Object arg0) {
-				return Integer.parseInt(((Event)arg0).getResource()) < 100;
+				return Integer.parseInt(((Event) arg0).getResource()) < 100;
 			}
 
 			public Class<?> classFromEvent() {
@@ -199,7 +201,7 @@ public class TestConditionService {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 		};
 	}
 }

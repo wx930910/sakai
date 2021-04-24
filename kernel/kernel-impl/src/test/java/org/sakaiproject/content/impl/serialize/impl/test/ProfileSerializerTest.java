@@ -21,15 +21,13 @@
 
 package org.sakaiproject.content.impl.serialize.impl.test;
 
-import lombok.extern.slf4j.Slf4j;
-
 import org.junit.Test;
-
 import org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
-public class ProfileSerializerTest
-{
+public class ProfileSerializerTest {
 	/**
 	 * Test method for
 	 * {@link org.sakaiproject.content.impl.serialize.impl.Type1BaseContentCollectionSerializer#parse(org.sakaiproject.entity.api.serialize.SerializableEntity, java.lang.String)}.
@@ -37,10 +35,9 @@ public class ProfileSerializerTest
 	 * @throws Exception
 	 */
 	@Test
-	public final void testParse() throws Exception
-	{
+	public final void testParse() throws Exception {
 		Type1BaseContentCollectionSerializer t1 = new Type1BaseContentCollectionSerializer();
-		t1.setTimeService(new MockTimeService());
+		t1.setTimeService(MockTimeService.mockTimeService1());
 		MockSerializableCollectionAcccess sc = new MockSerializableCollectionAcccess();
 		byte[] serialized = null;
 		Runtime r = Runtime.getRuntime();
@@ -49,36 +46,31 @@ public class ProfileSerializerTest
 		{
 			long start = System.currentTimeMillis();
 			long ms = r.freeMemory();
-			for (int i = 0; i < 16000; i++)
-			{
+			for (int i = 0; i < 16000; i++) {
 				serialized = t1.serialize(sc);
 			}
 			long me = r.freeMemory();
 			long m = ms - me;
 			long end = System.currentTimeMillis();
 			long t = (end - start);
-			log.info("Write 16000 Entities took " + t + "ms ");
-			log.info("Write 16000 Entities took " + (t * 1000) / 16000 + " us/entity ");
-			log.info("Write 16000 Entities took " + m + " bytes overhead ");
-			log.info("Write 16000 Entities took " + (m / 16000) + " bytes/entity overhead ");
+
 		}
 		r.gc();
 		Thread.sleep(2000);
 		{
 			long start = System.currentTimeMillis();
 			long ms = r.freeMemory();
-			for (int i = 0; i < 16000; i++)
-			{
+			for (int i = 0; i < 16000; i++) {
 				t1.parse(sc, serialized);
 			}
 			long me = r.freeMemory();
 			long m = ms - me;
 			long end = System.currentTimeMillis();
 			long t = (end - start);
-			log.info("Read 16000 Entities took " + t + "ms ");
-			log.info("Read 16000 Entities took " + (t * 1000) / 16000 + " us/entity ");
-			log.info("Read 16000 Entities took " + m + " bytes overhead ");
-			log.info("Read 16000 Entities took " + (m / 16000) + " bytes/entity overhead ");
+//			log.info("Read 16000 Entities took " + t + "ms ");
+//			log.info("Read 16000 Entities took " + (t * 1000) / 16000 + " us/entity ");
+//			log.info("Read 16000 Entities took " + m + " bytes overhead ");
+//			log.info("Read 16000 Entities took " + (m / 16000) + " bytes/entity overhead ");
 		}
 		sc.check();
 	}

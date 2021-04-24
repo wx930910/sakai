@@ -21,188 +21,26 @@
 
 package org.sakaiproject.portal.charon.test;
 
-import java.util.Collection;
-import java.util.Enumeration;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import org.sakaiproject.tool.api.ContextSession;
 import org.sakaiproject.tool.api.Session;
-import org.sakaiproject.tool.api.ToolSession;
 
 /**
  * @author ieb
  *
  */
-public class MockSession implements Session
-{
+public class MockSession {
 
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#clear()
-	 */
-	public void clear()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#clearExcept(java.util.Collection)
-	 */
-	public void clearExcept(Collection names)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getAttribute(java.lang.String)
-	 */
-	public Object getAttribute(String name)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getAttributeNames()
-	 */
-	public Enumeration getAttributeNames()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getContextSession(java.lang.String)
-	 */
-	public ContextSession getContextSession(String contextId)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getCreationTime()
-	 */
-	public long getCreationTime()
-	{
-		return 2001;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getId()
-	 */
-	public String getId()
-	{
-		// TODO Auto-generated method stub
-		return "Session.getID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getLastAccessedTime()
-	 */
-	public long getLastAccessedTime()
-	{
-		// TODO Auto-generated method stub
-		return 2002;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getMaxInactiveInterval()
-	 */
-	public int getMaxInactiveInterval()
-	{
-		// TODO Auto-generated method stub
-		return 2003;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getToolSession(java.lang.String)
-	 */
-	public ToolSession getToolSession(String placementId)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getUserEid()
-	 */
-	public String getUserEid()
-	{
-		// TODO Auto-generated method stub
-		return "ToolSession.getUserEID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#getUserId()
-	 */
-	public String getUserId()
-	{
-		// TODO Auto-generated method stub
-		return "ToolSession.getUserID";
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#invalidate()
-	 */
-	public void invalidate()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#removeAttribute(java.lang.String)
-	 */
-	public void removeAttribute(String name)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#setActive()
-	 */
-	public void setActive()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#setAttribute(java.lang.String, java.lang.Object)
-	 */
-	public void setAttribute(String name, Object value)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#setMaxInactiveInterval(int)
-	 */
-	public void setMaxInactiveInterval(int interval)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#setUserEid(java.lang.String)
-	 */
-	public void setUserEid(String eid)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.sakaiproject.tool.api.Session#setUserId(java.lang.String)
-	 */
-	public void setUserId(String uid)
-	{
-		// TODO Auto-generated method stub
-
+	public static Session mockSession1() {
+		Session mockInstance = mock(Session.class);
+		when(mockInstance.getUserId()).thenReturn("ToolSession.getUserID");
+		when(mockInstance.getId()).thenReturn("Session.getID");
+		when(mockInstance.getMaxInactiveInterval()).thenReturn(2003);
+		when(mockInstance.getCreationTime()).thenReturn((long) 2001);
+		when(mockInstance.getLastAccessedTime()).thenReturn((long) 2002);
+		when(mockInstance.getUserEid()).thenReturn("ToolSession.getUserEID");
+		return mockInstance;
 	}
 
 }
